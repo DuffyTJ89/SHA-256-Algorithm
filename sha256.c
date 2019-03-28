@@ -130,7 +130,7 @@ void sha256(FILE *msgf){
 
  }//end message blocks while loop
 
-  printf ("%x %x %x %x %x %x %x %x\n ", H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+  printf ("%08x %08x %08x %08x %08x %08x %08x %08x\n ", H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
 
 }//end sha256()
 
