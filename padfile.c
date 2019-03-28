@@ -10,7 +10,7 @@ union msgblock { //all members of union occupy the chunk of memory
 
 enum status {READ, PAD0, PAD1, FINISH}; //use for flags for the status of where the code has run when padding the message
 
-int main (int argc, char *argv[]){
+int nextMessageBlock (int argc, char *argv[]){
 
   union msgblock M;
   uint64_t numBits = 0;
