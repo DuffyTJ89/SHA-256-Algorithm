@@ -7,7 +7,14 @@
 
 void sha256();
 
-// see sections 4.1.2 for definitions
+union msgblock { //all members of union occupy the chunk of memory
+  uint8_t   e[64]; //unassigned 64  8 bit ints
+  uint32_t  t[16]; //unassigned 16  32 bit ints
+  uint64_t  s[8];  //unassigned 8   64 bit ints
+};
+
+enum status {READ, PAD0, PAD1, FINISH}; //use for flags for the status of where the code has run when padding the message// see sections 4.1.2 for definitions
+
 uint32_t sig0(uint32_t x);
 uint32_t sig1(uint32_t x);
 
