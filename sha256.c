@@ -168,7 +168,7 @@ uint32_t Maj(uint32_t x, uint32_t y, uint32_t z){
  return ((x & y) ^ (x & z) ^ (y & z));
 }
 
-int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, int *numBits){
+int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, uint64_t *numBits){
 
   uint64_t numBytes; //number of bytes that f read returns back
   
@@ -227,5 +227,3 @@ int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, int *numBits
   }
   return 1;// return 1 so this function is called again
 }//end while S == READ
-
-}//end nextMessageBlock
