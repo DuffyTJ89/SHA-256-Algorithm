@@ -35,8 +35,8 @@ enum status {READ, PAD0, PAD1, FINISH}; // see sections 4.1.2 for definitions
 //uint32_t Maj(uint32_t x, uint32_t y, uint32_t z);
 
 // see section 3.2 for defintions
-uint32_t rotr(uint32_t n, uint32_t x);
-uint32_t shr(uint32_t n, uint32_t x);
+// uint32_t rotr(uint32_t n, uint32_t x);
+// uint32_t shr(uint32_t n, uint32_t x);
 
 //calculate the SHA256 hash of a given file
 void sha256(FILE *f);
@@ -113,7 +113,7 @@ void sha256(FILE *msgf){
 
     //from page22, W[t] = ... equation in 6.2.2 part 1
     for (t = 16; t < 64; t++)
-      W[t] =  SIG1(W[t-2]) + W[t-7] + SIG0(W[t-15]) + W[t-16];
+      W[t] =  SIG_1(W[t-2]) + W[t-7] + SIG_0(W[t-15]) + W[t-16];
 
     //initialise a, b, c ... h as per step 2, page 22
     a = H[0]; b = H[1]; c = H[2]; d = H[3]; 
@@ -146,8 +146,9 @@ void sha256(FILE *msgf){
 
 }//end sha256()
 
+/*
 uint32_t rotr(uint32_t n, uint32_t x){
- return (x >> n) | (x << (32 - n));
+  return (x >> n) | (x << (32 - n));
 
 }//end rotr
 uint32_t shr(uint32_t n, uint32_t x){
@@ -156,7 +157,8 @@ uint32_t shr(uint32_t n, uint32_t x){
 }//end shr
 
 
-//can use macros??
+//can use macros???
+
 uint32_t sig0(uint32_t x){
  //see section 3.2 and 4.1.2  for definitions
  return (rotr(7, x) ^ rotr (18, x) ^ shr (3, x));
@@ -179,6 +181,7 @@ uint32_t Ch(uint32_t x, uint32_t y, uint32_t z){
 uint32_t Maj(uint32_t x, uint32_t y, uint32_t z){
  return ((x & y) ^ (x & z) ^ (y & z));
 }
+*/
 
 int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, uint64_t *numBits){
 
