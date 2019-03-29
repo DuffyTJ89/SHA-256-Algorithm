@@ -5,7 +5,15 @@
 #include <stdio.h> // input/output header file
 #include <stdint.h> // fixed bit length integers
 
-#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
+//#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
+
+#define Ch(x, y, z) (((x) & (y)) ^ (~(x) & (z)))
+#define Maj(x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+#define EP0(x) (rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22))
+#define EP1(x) (rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25))
+#define SIG_0(x) (rotr(x, 7) ^ rotr(x, 18) ^ ((x) >> 3))
+#define SIG_1(x) (rotr(x, 17) ^ rotr(x, 19) ^ ((x) >> 10))
+#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24))
 
 //Represents a message block
 union msgblock { //all members of union occupy the same chunk of memory
@@ -17,14 +25,14 @@ union msgblock { //all members of union occupy the same chunk of memory
 //use for flags for the status of where the code has run when padding the message
 enum status {READ, PAD0, PAD1, FINISH}; // see sections 4.1.2 for definitions
 
-uint32_t sig0(uint32_t x);
-uint32_t sig1(uint32_t x);
+//uint32_t sig0(uint32_t x);
+//uint32_t sig1(uint32_t x);
 
-uint32_t SIG0(uint32_t x);
-uint32_t SIG1(uint32_t x);
+//uint32_t SIG0(uint32_t x);
+//uint32_t SIG1(uint32_t x);
 
-uint32_t Ch(uint32_t x, uint32_t y, uint32_t z);
-uint32_t Maj(uint32_t x, uint32_t y, uint32_t z);
+//uint32_t Ch(uint32_t x, uint32_t y, uint32_t z);
+//uint32_t Maj(uint32_t x, uint32_t y, uint32_t z);
 
 // see section 3.2 for defintions
 uint32_t rotr(uint32_t n, uint32_t x);
@@ -114,8 +122,13 @@ void sha256(FILE *msgf){
     //step 3
     for (t = 0; t < 64; t++){
       //see section 4.1.2 for Ch and Maj
+<<<<<<< HEAD
       T1 = h + sig1(e) + Ch(e, f, g) + K[t] + W[t];
       T2 = sig0(a) + Maj(a,b,c);
+=======
+      T1 = h + EP1(e) + Ch(e, f, g) + K[t] + W[t];
+      T2 = EP0(a) + Maj(a,b,c);
+>>>>>>> eddb5968cd1b1a83bfb5d81b1ee7f1c98c46de28
       h = g;
       g = f;
       f = e;
