@@ -100,12 +100,12 @@ void sha256(FILE *msgf){
     //from page22, W[t] = M[t] for 0<= t >= 15
     for (t = 0; t < 16;t++){
       //W[t] = M.t[t];
-      W[t] = SWAP_UINT32(M.th[t]);
+      W[t] = SWAP_UINT32(M.t[t]);
     }
 
     //from page22, W[t] = ... equation in 6.2.2 part 1
     for (t = 16; t < 64; t++)
-      W[t] =  sig1(W[t-2]) + W[t-7] + sig0(W[t-15]) + W[t-16];
+      W[t] =  SIG1(W[t-2]) + W[t-7] + SIG0(W[t-15]) + W[t-16];
 
     //initialise a, b, c ... h as per step 2, page 22
     a = H[0]; b = H[1]; c = H[2]; d = H[3]; 
@@ -114,8 +114,8 @@ void sha256(FILE *msgf){
     //step 3
     for (t = 0; t < 64; t++){
       //see section 4.1.2 for Ch and Maj
-      T1 = h + SIG1(e) + Ch(e, f, g) + K[t] + W[t];
-      T2 = SIG0(a) + Maj(a,b,c);
+      T1 = h + sig1(e) + Ch(e, f, g) + K[t] + W[t];
+      T2 = sig0(a) + Maj(a,b,c);
       h = g;
       g = f;
       f = e;
