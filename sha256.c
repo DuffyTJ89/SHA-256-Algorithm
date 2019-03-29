@@ -7,6 +7,9 @@
 
 //#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
 
+#define rotl(a,b) (((a) << (b)) | ((a) >> (32-(b))))
+#define rotr(a,b) (((a) >> (b)) | ((a) << (32-(b))))
+
 #define Ch(x, y, z) (((x) & (y)) ^ (~(x) & (z)))
 #define Maj(x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
 #define EP0(x) (rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22))
