@@ -5,7 +5,7 @@
 #include <stdio.h> // input/output header file
 #include <stdint.h> // fixed bit length integers
 
-#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
+//#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
 
 #define Ch(x, y, z) (((x) & (y)) ^ (~(x) & (z)))
 #define Maj(x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
@@ -108,7 +108,7 @@ void sha256(FILE *msgf){
     //from page22, W[t] = M[t] for 0<= t >= 15
     for (t = 0; t < 16;t++){
       //W[t] = M.t[t];
-      W[t] = SWAP_UINT32(M.th[t]);
+      W[t] = SWAP_UINT32(M.t[t]);
     }
 
     //from page22, W[t] = ... equation in 6.2.2 part 1
@@ -122,8 +122,13 @@ void sha256(FILE *msgf){
     //step 3
     for (t = 0; t < 64; t++){
       //see section 4.1.2 for Ch and Maj
+<<<<<<< HEAD
+      T1 = h + sig1(e) + Ch(e, f, g) + K[t] + W[t];
+      T2 = sig0(a) + Maj(a,b,c);
+=======
       T1 = h + EP1(e) + Ch(e, f, g) + K[t] + W[t];
       T2 = EP0(a) + Maj(a,b,c);
+>>>>>>> eddb5968cd1b1a83bfb5d81b1ee7f1c98c46de28
       h = g;
       g = f;
       f = e;
