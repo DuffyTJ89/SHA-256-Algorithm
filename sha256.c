@@ -122,13 +122,10 @@ void sha256(FILE *msgf){
     //step 3
     for (t = 0; t < 64; t++){
       //see section 4.1.2 for Ch and Maj
-<<<<<<< HEAD
-      T1 = h + sig1(e) + Ch(e, f, g) + K[t] + W[t];
-      T2 = sig0(a) + Maj(a,b,c);
-=======
+
       T1 = h + EP1(e) + Ch(e, f, g) + K[t] + W[t];
       T2 = EP0(a) + Maj(a,b,c);
->>>>>>> eddb5968cd1b1a83bfb5d81b1ee7f1c98c46de28
+
       h = g;
       g = f;
       f = e;
