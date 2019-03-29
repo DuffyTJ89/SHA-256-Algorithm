@@ -5,6 +5,8 @@
 #include <stdio.h> // input/output header file
 #include <stdint.h> // fixed bit length integers
 
+#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
+
 //Represents a message block
 union msgblock { //all members of union occupy the same chunk of memory
   uint8_t   e[64]; //unassigned 64  8 bit ints
@@ -96,8 +98,10 @@ void sha256(FILE *msgf){
 
  while (nextMessageBlock(msgf, &M, &S, &numBits)){
     //from page22, W[t] = M[t] for 0<= t >= 15
-    for (t = 0; t < 16;t++)
-      W[t] = M.t[t];
+    for (t = 0; t < 16;t++){
+      //W[t] = M.t[t];
+      W[t] = SWAP_UINT32(M.th[t]);
+    }
 
     //from page22, W[t] = ... equation in 6.2.2 part 1
     for (t = 16; t < 64; t++)
