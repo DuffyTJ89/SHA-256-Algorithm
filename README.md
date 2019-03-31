@@ -7,7 +7,7 @@ This project is the SHA-256 version.
 # Setup and Install to run this program
 
 ### Installation to run c files
-- Windows - www.mingw.org
+Windows - www.mingw.org
 
 Linux run command
 ```sh
