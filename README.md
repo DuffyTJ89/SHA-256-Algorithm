@@ -7,8 +7,7 @@ This project is the SHA-256 version.
 # Setup and Install to run this program
 
 ### Installation to run c files
-Windows - www.mingw.org
-
+- Windows - www.mingw.org
 Linux run command
 ```sh
 sudo apt-get install build-essential
@@ -23,20 +22,20 @@ To run -
 ./SHA256 testFile.txt
 ```
 
-#### The algorithm works on an empty file. As such I have commented out the check for empty file.
+The algorithm works on an empty file. As such I have commented out the check for empty file.
 
 Example : 
 Using https://www.xorbin.com/tools/sha256-hash-calculator 
 
-#### the empty file returns a hash of :
+the empty file returns a hash of :
 
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
-#### Seen here:
+Seen here:
 
 ![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/emptyOnline.PNG)
 
-#### and using this program we get the same hash result :
+and using this program we get the same hash result :
 
 ![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/emptyFileMyProgram.PNG)
 
@@ -57,6 +56,24 @@ Using https://emn178.github.io/online-tools/sha256_checksum.html
 #### Both have the same output, but this program returns
 
 ![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/singleChar.PNG)
+
+# Research 
+
+| Topic | Site |
+| ------ | ------ |
+| How Does a Hashing Algorithm Work? | https://www.cryptocompare.com/coins/guides/how-does-a-hashing-algorithm-work/ |
+| Secure Hash Standard (SHS)  | https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf |
+
+# Technologies used
+
+| Topic | Site |
+| ------ | ------ |
+| Google Cloud | https://console.cloud.google.com/ |
+| GitHub  | https://github.com |
+| Online hash calculators  | https://www.xorbin.com/tools/sha256-hash-calculator | 
+|--| https://emn178.github.io/online-tools/sha256_checksum.html
+
+ 
 
 ### Author
 Thomas Duffy
