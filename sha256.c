@@ -5,8 +5,6 @@
 #include <stdio.h> // input/output header file
 #include <stdint.h> // fixed bit length integers
 
-//#define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24));
-
 #define rotl(a,b) (((a) << (b)) | ((a) >> (32-(b))))
 #define rotr(a,b) (((a) >> (b)) | ((a) << (32-(b))))
 
@@ -28,19 +26,6 @@ union msgblock { //all members of union occupy the same chunk of memory
 //use for flags for the status of where the code has run when padding the message
 enum status {READ, PAD0, PAD1, FINISH}; // see sections 4.1.2 for definitions
 
-//uint32_t sig0(uint32_t x);
-//uint32_t sig1(uint32_t x);
-
-//uint32_t SIG0(uint32_t x);
-//uint32_t SIG1(uint32_t x);
-
-//uint32_t Ch(uint32_t x, uint32_t y, uint32_t z);
-//uint32_t Maj(uint32_t x, uint32_t y, uint32_t z);
-
-// see section 3.2 for defintions
-// uint32_t rotr(uint32_t n, uint32_t x);
-// uint32_t shr(uint32_t n, uint32_t x);
-
 //calculate the SHA256 hash of a given file
 void sha256(FILE *f);
 
@@ -52,11 +37,20 @@ int main (int argc, char *argv[]){
   FILE* msgf;
   msgf = fopen(argv[1],"r");
 
-  if (msgf == NULL) {     
-    printf("Error opening file");
-  }else{
-    sha256(msgf); //call function to run secure hash algorithm on the file
-  }//end else
+  /*
+    source: https://stackoverflow.com/questions/13566082/how-can-check-if-file-has-content-or-not-using-c
+    error handling for empty file
+    
+    if (NULL != msgf) {
+    fseek (msgf, 0, SEEK_END);
+    size = ftell(msgf);
+
+      if (0 == size) {
+        printf("file is empty\n");
+      }
+    }
+  */
+  sha256(msgf); //call function to run secure hash algorithm on the file
   fclose(msgf); //close the file when finished with it
   return 0;
 }//end main
@@ -104,15 +98,18 @@ void sha256(FILE *msgf){
 
  //for looping
  int t, i;
+ int isbigEndian = checkEndian(); //1 is big, 0 is little
 
- //for (i = 0; i < 1; i++){ //message blocks loop. See page 22.
-
+ //message blocks loop. See page 22.
  while (nextMessageBlock(msgf, &M, &S, &numBits)){
     //from page22, W[t] = M[t] for 0<= t >= 15
     for (t = 0; t < 16;t++){
-      //W[t] = M.t[t];
-      W[t] = SWAP_UINT32(M.t[t]);
-    }
+      if(isbigEndian == 1){
+          W[t] = M.t[t];
+      }else{
+          W[t] = SWAP_UINT32(M.t[t]);
+      }     
+    }//end for
 
     //from page22, W[t] = ... equation in 6.2.2 part 1
     for (t = 16; t < 64; t++)
@@ -150,43 +147,6 @@ void sha256(FILE *msgf){
   printf ("%08x %08x %08x %08x %08x %08x %08x %08x\n ", H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
 
 }//end sha256()
-
-/*
-uint32_t rotr(uint32_t n, uint32_t x){
-  return (x >> n) | (x << (32 - n));
-
-}//end rotr
-uint32_t shr(uint32_t n, uint32_t x){
- return (x >> n);
-
-}//end shr
-
-
-//can use macros???
-
-uint32_t sig0(uint32_t x){
- //see section 3.2 and 4.1.2  for definitions
- return (rotr(7, x) ^ rotr (18, x) ^ shr (3, x));
-}//end sig0
-uint32_t sig1(uint32_t x){
- //see section 3.2 and 4.1.2  for definitions
- return (rotr(17, x) ^ rotr (19, x) ^ shr (10, x));
-}//end sig1
-
-uint32_t SIG0(uint32_t x){
- return (rotr(2, x) ^ rotr (13, x) ^ rotr (22, x));
-}
-uint32_t SIG1(uint32_t x){
- return (rotr(6, x) ^ rotr (11, x) ^ rotr (25, x));
-}
-
-uint32_t Ch(uint32_t x, uint32_t y, uint32_t z){
- return ((x & y) ^ ((!x) & z));
-}
-uint32_t Maj(uint32_t x, uint32_t y, uint32_t z){
- return ((x & y) ^ (x & z) ^ (y & z));
-}
-*/
 
 int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, uint64_t *numBits){
 
@@ -247,3 +207,17 @@ int nextMessageBlock(FILE *msgf, union msgblock *M, enum status *S, uint64_t *nu
   }
   return 1;// return 1 so this function is called again
 }//end while S == READ
+
+int checkEndian()
+{
+  // source: https://stackoverflow.com/questions/12791864/c-program-to-check-little-vs-big-endian
+  int num = 1;
+  int flag = 0;
+  if (*(char *)&num ==1){
+    printf("\n This PC is little endian");
+  }else{
+    printf("\n This PC is big endian");
+    flag = 1;
+  }//end if else
+  return flag;
+}//end checkEndian
