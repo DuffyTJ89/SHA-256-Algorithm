@@ -16,6 +16,9 @@
 #define SIG_1(x) (rotr(x, 17) ^ rotr(x, 19) ^ ((x) >> 10))
 #define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24))
 
+//declare function
+int checkEndian();
+
 //Represents a message block
 union msgblock { //all members of union occupy the same chunk of memory
   uint8_t   e[64]; //unassigned 64  8 bit ints
@@ -214,9 +217,9 @@ int checkEndian()
   int num = 1;
   int flag = 0;
   if (*(char *)&num ==1){
-    printf("\n This PC is little endian");
+    printf("\n This PC is little endian \n");
   }else{
-    printf("\n This PC is big endian");
+    printf("\n This PC is big endian \n");
     flag = 1;
   }//end if else
   return flag;
