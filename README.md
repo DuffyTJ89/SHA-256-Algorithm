@@ -9,10 +9,12 @@ The algorithm works on an empty file. As such I have commented out the check for
 
 Example : 
 Using https://www.xorbin.com/tools/sha256-hash-calculator 
+
 the empty file returns a hash of :
+
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
-***insert pic here***
+Seen here:
 
 ![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/emptyOnline.PNG)
 
