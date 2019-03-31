@@ -7,8 +7,10 @@ This project is the SHA-256 version.
 # Setup and Install to run this program
 
 ### Installation to run c files
-- Windows - www.mingw.org
-Linux run command
+#### Windows 
+- www.mingw.org
+#### Linux 
+- run command
 ```sh
 sudo apt-get install build-essential
 ```
