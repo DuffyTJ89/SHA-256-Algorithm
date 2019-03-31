@@ -21,3 +21,23 @@ Seen here:
 and using this program we get the same hash result :
 
 ![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/emptyFileMyProgram.PNG)
+
+#Single Character
+
+The program doesn't work with a text file with just a single character in it. It does return a hash but the value isn't correct.
+
+Using https://www.xorbin.com/tools/sha256-hash-calculator
+
+
+![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/singleCharOnline.PNG)
+
+
+Using https://emn178.github.io/online-tools/sha256_checksum.html
+
+![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/singleCharOnline2.PNG)
+
+Both have the same output, but this program returns
+
+![alt text](https://raw.githubusercontent.com/DuffyTJ89/SHA-256-Algorithm/master/pics/singleChar.PNG)
+
+
